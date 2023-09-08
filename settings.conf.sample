@@ -8,3 +8,4 @@ password = yourPwd
 # rpc_update_freq in seconds(for info live view)
 rpc_update_freq = 60    
 font_color = white
+default_view = info

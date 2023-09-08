@@ -1,5 +1,6 @@
 from view import info, wallets, unspent, chainstate, mempool
 import argparse
+import util
  
 
 
@@ -11,7 +12,7 @@ def _args():
 
 def main():
     args = _args()
-    cmd = 'chainstate'
+    cmd = util.get_conf('console')['default_view']
     if args.cmd:
         cmd = (args.cmd).lower()  
     if cmd == 'info':
