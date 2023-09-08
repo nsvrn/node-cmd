@@ -20,7 +20,7 @@ def get_mempool(verbose=False, sequence=False):
     result = get_rpc('getrawmempool', params)
     return result
 
-def get_info(is_txoutset=False):
+def get_info():
     info = {}
     # blockchain
     bc = get_rpc('getblockchaininfo')
@@ -40,17 +40,7 @@ def get_info(is_txoutset=False):
     # wallets
     wcount, wtotal = get_wallets(True)
     info['wallet_count'] = wcount
-    info['total_sats'] = f"{int(wtotal * 100e6):,}"    
-
-    # gettxoutsetinfo : global utxo set stats/chainstate
-    # NOTE: This is too slow without coinstatsindex enabled
-    if is_txoutset:
-        ux = get_rpc('gettxoutsetinfo')
-        info['utxo.count'] = f"{ux['txouts']:,}"
-        info['utxo.total_amt'] = round(float(ux['total_amount']), 4)
-        info['utxo.txs'] = f"{ux['transactions']:,}"
-        info['utxo.size'] = f"{int(ux['disk_size']/(1024**3))} GB"
-
+    info['total_balance'] = f"{wtotal}"    
     return info
 
 
@@ -67,4 +57,22 @@ def get_wallets(only_summary=False):
     else:
         return wallet_info
 
+
+def get_unspent():
+    wallets = get_rpc('listwallets')    
+    wallet_info = []
+    for w in wallets:
+        utxos = get_rpc('listunspent', wallet=w)
+        utxos = sorted(utxos, reverse=True, key=lambda x: x['amount'])
+        if utxos: wallet_info.append((w, utxos))
+    return wallet_info
     
+
+def get_chainstate():
+    ux = get_rpc('gettxoutsetinfo')
+    info = {}
+    info['utxo.count'] = f"{ux['txouts']:,}"
+    info['utxo.total_amt'] = f"{int(ux['total_amount']):,}"
+    info['utxo.txs'] = f"{ux['transactions']:,}"
+    info['utxo.size'] = f"{round(ux['disk_size']/(1024**3),1)} GB"
+    return info

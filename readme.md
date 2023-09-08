@@ -21,7 +21,17 @@ Command line tool that aggregates information from the Bitcoin RPC.
 
 ![alt info](docs/info.png)
 
+#### chainstate (utxo summary)
+`python node_cmd.py chainstate`
+
+![alt chainstate](docs/chainstate.png)
+
 #### wallets summary
 `python node_cmd.py wallets`
 
 ![alt wallets](docs/wallets.png)
+
+#### unspent (wallet utxos)
+`python node_cmd.py unspent`
+
+![alt unspent](docs/unspent.png)

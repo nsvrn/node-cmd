@@ -24,15 +24,14 @@ def _table(data: dict, clr: str, updt_in:int):
         return tbl
     
 
-def get_data(is_txoutset):
-    data = rpc.get_info(is_txoutset)
+def get_data():
+    data = rpc.get_info()
     return data
 
 
 def load():
     cfg = util.get_conf('console')
-    is_txoutset = bool(int(cfg['txoutset']))
-    data = get_data(is_txoutset)
+    data = get_data()
     clr = cfg['font_color']
     updt_in = int(cfg['rpc_update_freq'])
     with Live(_table(data, clr, updt_in), auto_refresh=False) as live:
@@ -40,5 +39,5 @@ def load():
             for i in range(updt_in, 0, -1):
                 live.update(_table(data, clr, i), refresh=True)
                 time.sleep(1)
-            data = get_data(is_txoutset)
+            data = get_data()
             live.update(_table(data, clr, updt_in), refresh=True)

@@ -1,4 +1,4 @@
-from view import info, wallets
+from view import info, wallets, unspent, chainstate, mempool
 import argparse
  
 
@@ -11,17 +11,19 @@ def _args():
 
 def main():
     args = _args()
-    cmd = 'info'
+    cmd = 'chainstate'
     if args.cmd:
         cmd = (args.cmd).lower()  
     if cmd == 'info':
         info.load()
     elif cmd == 'wallets':
         wallets.load()
-    elif cmd == 'myutxos':
-        pass #TODO
+    elif cmd == 'unspent':
+        unspent.load()
+    elif cmd == 'chainstate':
+        chainstate.load()
     elif cmd == 'mempool':
-        pass #TODO
+        mempool.load()
     
 
 
