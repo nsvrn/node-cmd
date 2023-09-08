@@ -22,25 +22,41 @@ def get_mempool(verbose=False, sequence=False):
 
 def get_info():
     info = {}
+    
     # blockchain
     bc = get_rpc('getblockchaininfo')
     info['chain'] = bc['chain']
     info['blocks'] = f"{int(bc['blocks']):,}"
-    info['difficulty'] = f"{int(bc['difficulty']/1e12)}T"
     info['node.size'] = f"{int(bc['size_on_disk']/(1024**3))} GB"
+    
     # network
     nt = get_rpc('getnetworkinfo')
     info['node'] = f"v{nt['version']}"
     info['connections'] = nt['connections']
+    
+    # hashrate
+    nh = get_rpc('getnetworkhashps', [100])
+    info['hashrate'] = f"{int(nh/1e18)} EH/s"
+
+    info['difficulty'] = f"{int(bc['difficulty']/1e12)}T"
+    
     # mempool
     mp = get_rpc('getmempoolinfo')
-    info['mempool.size'] = f"{mp['size']:,}"
-    info['mempool.bytes'] = f"{int(mp['bytes']/(1024**2))} MB"
+    info['mempool.count'] = f"{mp['size']:,}"
+    info['mempool.size'] = f"{int(mp['bytes']/(1024**2))} MB"
     info['mempool.total_fee'] = round(float(mp['total_fee']), 4)
+    
     # wallets
     wcount, wtotal = get_wallets(True)
     info['wallet_count'] = wcount
-    info['total_balance'] = f"{wtotal}"    
+    info['total_balance'] = f"{wtotal}"
+
+    # estimated fee
+    # outputs in BTC/kvB
+    n = int(util.get_conf('console')['fee_estimate_blocks'])
+    fe = get_rpc('estimatesmartfee', [n])
+    info['fee_estimate'] = f"{int(fe['feerate'] * 100e6 / 1000)} s/vB"
+    
     return info
 
 

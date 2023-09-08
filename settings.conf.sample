@@ -6,6 +6,8 @@ password = yourPwd
 
 [console]
 # rpc_update_freq in seconds(for info live view)
+# fee_estimate_blocks is target blocks n of estimatesmartfee rpc
 rpc_update_freq = 60    
 font_color = white
 default_view = info
+fee_estimate_blocks = 6
