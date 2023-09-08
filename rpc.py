@@ -22,6 +22,7 @@ def get_mempool(verbose=False, sequence=False):
 
 def get_info():
     info = {}
+    cfg = util.get_conf('stats')
     
     # blockchain
     bc = get_rpc('getblockchaininfo')
@@ -35,6 +36,7 @@ def get_info():
     info['connections'] = nt['connections']
     
     # hashrate
+    n = int(cfg['hashrate_blocks'])
     nh = get_rpc('getnetworkhashps', [100])
     info['hashrate'] = f"{int(nh/1e18)} EH/s"
 
@@ -53,7 +55,7 @@ def get_info():
 
     # estimated fee
     # outputs in BTC/kvB
-    n = int(util.get_conf('console')['fee_estimate_blocks'])
+    n = int(cfg['fee_estimate_blocks'])
     fe = get_rpc('estimatesmartfee', [n])
     info['fee_estimate'] = f"{int(fe['feerate'] * 100e6 / 1000)} s/vB"
     
