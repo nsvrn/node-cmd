@@ -1,6 +1,7 @@
 from view import info, wallets, unspent, chainstate, mempool
 import argparse
-import util
+from threading import Thread
+import util, external
  
 
 
@@ -13,11 +14,19 @@ def _args():
 def main():
     args = _args()
     cmd = util.get_conf('console')['default_view']
+    
     if args.cmd:
         cmd = (args.cmd).lower()  
+    
     if cmd == 'info':
-        info.load()
-    elif cmd == 'wallets':
+        fetch_price = int(util.get_conf('stats')['enable_price_fetch'])
+        if int(fetch_price) == 1: 
+            external.save_price(run_forever=False)
+            b = Thread(name='bg', daemon=True, target=external.save_price)
+            b.start()
+        info.load(fetch_price)    
+
+    elif cmd == "wallets":
         wallets.load()
     elif cmd == 'unspent':
         unspent.load()
