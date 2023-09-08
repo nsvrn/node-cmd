@@ -1,4 +1,4 @@
-from view import info
+from view import info, wallets
 import argparse
  
 
@@ -17,7 +17,7 @@ def main():
     if cmd == 'info':
         info.load()
     elif cmd == 'wallets':
-        pass #TODO
+        wallets.load()
     elif cmd == 'myutxos':
         pass #TODO
     elif cmd == 'mempool':

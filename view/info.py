@@ -7,7 +7,7 @@ import util, rpc
 
 def _table(data: dict, clr: str, updt_in:int):
     if data: 
-        tbl = Table(show_header=False, show_lines=True, border_style='white')
+        tbl = Table(show_header=False, show_lines=True)
         datestr = dtm.now().strftime('%a %b %-d')
         timestr = dtm.now().strftime('%-I:%M %p')        
         vlist, row = [], []

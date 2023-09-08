@@ -38,13 +38,9 @@ def get_info(is_txoutset=False):
     info['mempool.bytes'] = f"{int(mp['bytes']/(1024**2))} MB"
     info['mempool.total_fee'] = round(float(mp['total_fee']), 4)
     # wallets
-    wallets = get_rpc('listwallets')
-    info['wallet_count'] = len(wallets)
-    balance = 0
-    for w in wallets:
-        wt = get_rpc('getwalletinfo', wallet=w)
-        balance += float(wt['balance'])
-    info['total_sats'] = f"{int(balance * 100e6):,}"
+    wcount, wtotal = get_wallets(True)
+    info['wallet_count'] = wcount
+    info['total_sats'] = f"{int(wtotal * 100e6):,}"    
 
     # gettxoutsetinfo : global utxo set stats/chainstate
     # NOTE: This is too slow without coinstatsindex enabled
@@ -57,3 +53,18 @@ def get_info(is_txoutset=False):
 
     return info
 
+
+def get_wallets(only_summary=False):
+    wallets = get_rpc('listwallets')    
+    balance = 0
+    wallet_info = []
+    for w in wallets:
+        wt = get_rpc('getwalletinfo', wallet=w)
+        balance += float(wt['balance'])
+        wallet_info.append(wt)
+    if only_summary:
+        return len(wallets), balance
+    else:
+        return wallet_info
+
+    
