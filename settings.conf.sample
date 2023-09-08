@@ -1,0 +1,10 @@
+[rpc]
+ip = 127.0.0.1
+port = 8332
+user = yourUser
+password = yourPwd
+
+[console]
+rpc_update_freq = 60    # rpc_update_freq in seconds(for info live view)
+font_color = blue
+txoutset = 0            # set 1 only if coinstatindex is enabled
