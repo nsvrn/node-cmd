@@ -35,7 +35,6 @@ def get_data(fetch_price):
     data = rpc.get_info()
     f = Path(__file__).parents[1] / 'ext_data.json'
     if fetch_price == 1 and f.exists():
-        delay = int(util.get_conf('info')['price_fetch_delay'])
         ext = json.loads(f.read_text(encoding='UTF-8'))
         data['usd_price'] = f"${ext['price']:,}"
         data['last_price'] = (datetime.fromtimestamp(ext['timestamp'])).strftime('%-I:%M %p')

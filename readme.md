@@ -12,10 +12,12 @@ Command line tool that aggregates information from the Bitcoin RPC.
     cp settings.conf.sample settings.conf &&
     pip install -r requirements.txt
 ```
-3. Setup config file: edit the `settings.conf` file
-4. You can add an alias in your `.bashrc` and run `source .bashrc`:
+3. You can add an alias in your `.bashrc` and run `source .bashrc`:
 
 `alias nodecmd="python3 /path/to/node-cmd/node_cmd.py`"
+
+4. The first time your run it, it will automatically copy `settings.conf.sample` and open `settings.conf` in `vim`,
+<br>make sure to setup the RPC settings correctly. Thereafter you can edit conf using `nodecmd settings` command.
 
 ---
 

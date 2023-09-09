@@ -2,18 +2,21 @@ import util
 import json, requests
 
 
-
 def get_rpc(method, params=[], wallet=None):
     conf = util.get_conf('rpc')    
     url = f"http://{conf['user']}:{conf['password']}@{conf['ip']}:{conf['port']}"
     if wallet: url += f'/wallet/{wallet}'
     headers = {'content-type': 'application/json'}
     payload = json.dumps({"method": method, "params": params, "jsonrpc": "2.0", "id":"node-dash"})
-    response = requests.post(url, headers=headers, data=payload).json()
-    if response['error']:
-        return response['error']        
-    else:
-        return response['result']
+    try:
+        response = requests.post(url, headers=headers, data=payload).json()
+        if response['error']:
+            return response['error']        
+        else:
+            return response['result']
+    except:
+        raise Exception('RPC connection failure, run nodecmd settings to edit')
+    
 
 def get_mempool(verbose=False, sequence=False):
     params = [verbose, sequence]

@@ -1,12 +1,12 @@
 from view import info, wallets, unspent, chainstate, mempool
-import argparse, json
+import argparse, json, subprocess
 from threading import Thread
 import util, external, rpc
  
 
 
 def _args():
-    cmd_choices = ['info', 'wallets', 'unspent', 'chainstate', 'mempool']
+    cmd_choices = ['info', 'wallets', 'unspent', 'chainstate', 'mempool', 'settings']
     parser = argparse.ArgumentParser(prog='nodecmd')
     subparser = parser.add_subparsers(help='types of cmd', dest='cmd')
     for c in cmd_choices:
@@ -20,19 +20,21 @@ def _args():
 
 def main():
     args = _args()
-    cmd = util.get_conf('console')['default_view']
-
+    
     if args.cmd:
-        cmd = args.cmd.lower()  
+        cmd = args.cmd.lower()
+    else:
+        cmd = util.get_conf('console')['default_view']
 
-    if cmd == 'info':
+    if cmd == 'settings':
+        util.load_settings()        
+    elif cmd == 'info':
         fetch_price = int(util.get_conf('info')['enable_price_fetch'])
         if int(fetch_price) == 1: 
             external.save_price(run_forever=False)
             b = Thread(name='bg', daemon=True, target=external.save_price)
             b.start()
-        info.load(fetch_price)    
-
+        info.load(fetch_price)
     elif cmd == "wallets":
         wallets.load()
     elif cmd == 'unspent':

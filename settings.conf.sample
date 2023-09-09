@@ -1,6 +1,6 @@
 [rpc]
 ip = 127.0.0.1
-port = 8333
+port = 8332
 user = yourUser
 password = yourPwd
 

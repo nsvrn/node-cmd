@@ -19,7 +19,7 @@ def save_price(run_forever=True):
         price = content.find('p', {'class':'js-nav-price'})
         price = int(float(price.text.strip().replace(',', '').replace('$', '')))
         data = {"price":price, "timestamp":time()}
-        fp = Path('ext_data.json')
+        fp = Path(__file__).parent / 'ext_data.json'
         if fp.exists(): fp.unlink()
         lock.acquire()
         with fp.open("w", encoding="UTF-8") as f: 
