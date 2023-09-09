@@ -1,12 +1,12 @@
-from view import info, wallets, unspent, chainstate, mempool
-import argparse, json, subprocess
+from view import info, wallets, unspent, chainstate
+import argparse, json
 from threading import Thread
 import util, external, rpc
  
 
 
 def _args():
-    cmd_choices = ['info', 'wallets', 'unspent', 'chainstate', 'mempool', 'settings']
+    cmd_choices = ['info', 'wallets', 'unspent', 'chainstate', 'settings']
     parser = argparse.ArgumentParser(prog='nodecmd')
     subparser = parser.add_subparsers(help='types of cmd', dest='cmd')
     for c in cmd_choices:
@@ -41,8 +41,6 @@ def main():
         unspent.load()
     elif cmd == 'chainstate':
         chainstate.load()
-    elif cmd == 'mempool':
-        mempool.load()
     elif cmd == 'rpc':
         params = args.params if args.params else []
         output = rpc.get_rpc(args.method, params, args.rpcwallet)
