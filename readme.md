@@ -20,24 +20,21 @@ Command line tool that aggregates information from the Bitcoin RPC.
 ---
 
 #### info - live view
-`python node_cmd.py info` or `python node_cmd.py`
+`nodecmd` or `nodecmd info`
 
 NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settings.conf` with `enable_price_fetch=0`
 
 ![alt info](docs/info.png)
 
 #### chainstate (utxo summary)
-`python node_cmd.py chainstate`
 
 ![alt chainstate](docs/chainstate.png)
 
 #### wallets summary
-`python node_cmd.py wallets`
 
 ![alt wallets](docs/wallets.png)
 
 #### unspent (wallet utxos)
-`python node_cmd.py unspent`
 
 ![alt unspent](docs/unspent.png)
 
@@ -49,7 +46,5 @@ NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settin
 `python node_cmd.py rpc -method=getblockchaininfo`
 
 `python node_cmd.py rpc -rpcwallet=test -method=getwalletinfo`
-
-`python node_cmd.py rpc -method=estimatesmartfee -params=[1]`
 
 ![alt rpc](docs/rpc.png)
