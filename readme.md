@@ -20,9 +20,10 @@ Command line tool that aggregates information from the Bitcoin RPC.
 ---
 
 #### info - live view
-`nodecmd` or `nodecmd info`
 
 NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settings.conf` with `enable_price_fetch=0`
+
+`nodecmd` or `nodecmd info`
 
 ![alt info](docs/info.png)
 
@@ -42,9 +43,8 @@ NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settin
 #### rpc calls:
 - RPC calls [ref](https://developer.bitcoin.org/reference/rpc/)
 - Passes through RPC calls and returns the json response as-is
-
-`python node_cmd.py rpc -method=getblockchaininfo`
-
-`python node_cmd.py rpc -rpcwallet=test -method=getwalletinfo`
+- Example 1: `nodecmd rpc -method=getblockchaininfo`
+- Example 2: `nodecmd rpc -rpcwallet=test -method=getwalletinfo`
+- Example 3: `nodecmd rpc -method=estimatesmartfee -params=[1]`
 
 ![alt rpc](docs/rpc.png)
