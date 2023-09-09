@@ -17,7 +17,8 @@ Command line tool that aggregates information from the Bitcoin RPC.
 `alias nodecmd="python3 /path/to/node-cmd/node_cmd.py`"
 
 4. The first time your run it, it will automatically copy `settings.conf.sample` and open `settings.conf` in `vim`,
-<br>make sure to setup the RPC settings correctly. Thereafter you can edit conf using `nodecmd settings` command.
+<br>make sure to setup the RPC settings correctly. 
+<br>Thereafter you can edit conf using `nodecmd settings` command when needed.
 
 ---
 
