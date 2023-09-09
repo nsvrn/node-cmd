@@ -1,25 +1,32 @@
 from view import info, wallets, unspent, chainstate, mempool
-import argparse
+import argparse, json
 from threading import Thread
-import util, external
+import util, external, rpc
  
 
 
 def _args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('cmd', nargs='?', const='info')
+    cmd_choices = ['info', 'wallets', 'unspent', 'chainstate', 'mempool']
+    parser = argparse.ArgumentParser(prog='nodecmd')
+    subparser = parser.add_subparsers(help='types of cmd', dest='cmd')
+    for c in cmd_choices:
+        subparser.add_parser(c)
+    rpc_sp = subparser.add_parser('rpc')
+    rpc_sp.add_argument('-rpcwallet', required=False, help='use specific wallet')
+    rpc_sp.add_argument('-method', required=True, nargs='?', default='', help="rpc method name")
+    rpc_sp.add_argument('-params', required=False, type=json.loads, help="rpc method params separated by commas")
     return parser.parse_args()
 
 
 def main():
     args = _args()
     cmd = util.get_conf('console')['default_view']
-    
+
     if args.cmd:
-        cmd = (args.cmd).lower()  
-    
+        cmd = args.cmd.lower()  
+
     if cmd == 'info':
-        fetch_price = int(util.get_conf('stats')['enable_price_fetch'])
+        fetch_price = int(util.get_conf('info')['enable_price_fetch'])
         if int(fetch_price) == 1: 
             external.save_price(run_forever=False)
             b = Thread(name='bg', daemon=True, target=external.save_price)
@@ -34,6 +41,16 @@ def main():
         chainstate.load()
     elif cmd == 'mempool':
         mempool.load()
+    elif cmd == 'rpc':
+        params = args.params if args.params else []
+        output = rpc.get_rpc(args.method, params, args.rpcwallet)
+        if 'code' in output and output['code'] == -1:
+            err = str(output)
+            err = err.replace('\\n', '\n')
+            err = err.replace('\\t', '\t')
+            print(err)
+        else:
+            print(json.dumps(output, indent=2, sort_keys=False))
     
 
 

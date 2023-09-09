@@ -13,6 +13,9 @@ Command line tool that aggregates information from the Bitcoin RPC.
     pip install -r requirements.txt
 ```
 3. Setup config file: edit the `settings.conf` file
+4. You can add an alias in your `.bashrc` and run `source .bashrc`:
+
+`alias nodecmd="python3 /path/to/node-cmd/node_cmd.py`"
 
 ---
 
@@ -37,3 +40,16 @@ NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settin
 `python node_cmd.py unspent`
 
 ![alt unspent](docs/unspent.png)
+
+
+#### rpc calls:
+- RPC calls [ref](https://developer.bitcoin.org/reference/rpc/)
+- Passes through RPC calls and returns the json response as-is
+
+`python node_cmd.py rpc -method=getblockchaininfo`
+
+`python node_cmd.py rpc -rpcwallet=test -method=getwalletinfo`
+
+`python node_cmd.py rpc -method=estimatesmartfee -params=[1]`
+
+![alt rpc](docs/rpc.png)

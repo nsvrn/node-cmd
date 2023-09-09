@@ -35,7 +35,7 @@ def get_data(fetch_price):
     data = rpc.get_info()
     f = Path(__file__).parents[1] / 'ext_data.json'
     if fetch_price == 1 and f.exists():
-        delay = int(util.get_conf('stats')['price_fetch_delay'])
+        delay = int(util.get_conf('info')['price_fetch_delay'])
         ext = json.loads(f.read_text(encoding='UTF-8'))
         data['usd_price'] = f"${ext['price']:,}"
         data['last_price'] = (datetime.fromtimestamp(ext['timestamp'])).strftime('%-I:%M %p')
@@ -44,10 +44,10 @@ def get_data(fetch_price):
 
 
 def load(fetch_price):
-    cfg = util.get_conf('console')
+    cfg = util.get_conf()
     data = get_data(fetch_price)
-    clr = cfg['font_color']
-    updt_in = int(cfg['rpc_update_freq'])
+    clr = cfg['console']['font_color']
+    updt_in = int(cfg['info']['rpc_update_freq'])
     with Live(_table(data, clr, updt_in), auto_refresh=False) as live:
         while(True):
             for i in range(updt_in, 0, -1):

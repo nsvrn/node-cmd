@@ -5,16 +5,17 @@ user = yourUser
 password = yourPwd
 
 [console]
-# rpc_update_freq in seconds(for info live view)
-rpc_update_freq = 60    
 font_color = white
 default_view = info
 
-[stats]
+[info]
+# rpc_update_freq in seconds(for info live view)
 # hashrate_blocks is hashrate from previous n blocks
 # fee_estimate_blocks is target blocks n of estimatesmartfee rpc
 # enable_price_fetch fetches Bitcoin price from an external website
 # price_fetch_delay in seconds to avoid rate limits
+
+rpc_update_freq = 60    
 hashrate_blocks = 100
 fee_estimate_blocks = 6
 enable_price_fetch = 1

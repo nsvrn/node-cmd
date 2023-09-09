@@ -9,7 +9,7 @@ lock = threading.Lock()
 
 
 URL = 'https://river.com'
-delay = int(util.get_conf('stats')['price_fetch_delay'])
+delay = int(util.get_conf('info')['price_fetch_delay'])
 
 def save_price(run_forever=True):
     while(True):

@@ -11,7 +11,7 @@ def get_rpc(method, params=[], wallet=None):
     payload = json.dumps({"method": method, "params": params, "jsonrpc": "2.0", "id":"node-dash"})
     response = requests.post(url, headers=headers, data=payload).json()
     if response['error']:
-        raise Exception(response['error'])
+        return response['error']        
     else:
         return response['result']
 
@@ -22,7 +22,7 @@ def get_mempool(verbose=False, sequence=False):
 
 def get_info():
     info = {}
-    cfg = util.get_conf('stats')
+    cfg = util.get_conf('info')
     
     # blockchain
     bc = get_rpc('getblockchaininfo')
