@@ -9,7 +9,6 @@ Command line tool that aggregates information from the Bitcoin RPC.
 ```
     git clone https://github.com/ns-xvrn/node-cmd.git &&
     cd node-cmd &&
-    cp settings.conf.sample settings.conf &&
     pip install -r requirements.txt
 ```
 3. You can add an alias in your `.bashrc` and run `source .bashrc`:
