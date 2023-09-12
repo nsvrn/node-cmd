@@ -41,6 +41,9 @@ NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settin
 
 ![alt unspent](docs/unspent.png)
 
+#### fees (estimatesmartfees for target n blocks)
+![alt fees](docs/fees.png)
+
 
 #### rpc calls:
 - RPC calls [ref](https://developer.bitcoin.org/reference/rpc/)
