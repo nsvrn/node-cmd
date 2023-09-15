@@ -46,7 +46,7 @@ def main():
     elif cmd == 'rpc':
         params = args.params if args.params else []
         output = rpc.get_rpc(args.method, params, args.rpcwallet)
-        if 'code' in output and output['code'] == -1:
+        if type(output) == dict and 'code' in output and output['code'] == -1:
             err = str(output)
             err = err.replace('\\n', '\n')
             err = err.replace('\\t', '\t')
