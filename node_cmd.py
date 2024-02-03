@@ -14,7 +14,7 @@ def _args():
     rpc_sp = subparser.add_parser('rpc')
     rpc_sp.add_argument('-rpcwallet', required=False, help='use specific wallet')
     rpc_sp.add_argument('-method', required=True, nargs='?', default='', help="rpc method name")
-    rpc_sp.add_argument('-params', required=False, type=json.loads, help="rpc method params separated by commas")
+    rpc_sp.add_argument('-params', required=False, type=str, help="rpc method params separated by commas")
     return parser.parse_args()
 
 

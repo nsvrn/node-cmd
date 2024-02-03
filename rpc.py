@@ -2,12 +2,21 @@ import util
 import json, requests
 
 
-def get_rpc(method, params=[], wallet=None):
+def get_rpc(method, params=None, wallet=None):
     conf = util.get_conf('rpc')    
     url = f"http://{conf['user']}:{conf['password']}@{conf['ip']}:{conf['port']}"
     if wallet: url += f'/wallet/{wallet}'
     headers = {'content-type': 'application/json'}
-    payload = json.dumps({"method": method, "params": params, "jsonrpc": "2.0", "id":"node-dash"})
+    paramslist = params
+    if type(params) == str and params:
+        paramslist = []
+        for p in params.split(','):
+            try: 
+                if '.' in p: paramslist.append(float(p))
+                else: paramslist.append(int(p))
+            except:
+                paramslist.append(p)
+    payload = json.dumps({"method": method, "params": paramslist, "jsonrpc": "2.0", "id":"node-dash"})
     try:
         response = requests.post(url, headers=headers, data=payload).json()
         if response['error']:

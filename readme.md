@@ -48,8 +48,10 @@ NOTE: only price fetch is a non Bitcoin rpc fetch, you can disable it in `settin
 #### rpc calls:
 - RPC calls [ref](https://developer.bitcoin.org/reference/rpc/)
 - Passes through RPC calls and returns the json response as-is
+- Pass multiple parameters as comma-separated string (strings in double quotes, numerics without quotes)
 - Example 1: `nodecmd rpc -method=getblockchaininfo`
 - Example 2: `nodecmd rpc -rpcwallet=test -method=getwalletinfo`
-- Example 3: `nodecmd rpc -method=estimatesmartfee -params=[1]`
+- Example 3: `nodecmd rpc -method=estimatesmartfee -params=1`
+- Example 4: `nodecmd rpc -method=getmempoolentry -params="9b0b033ddd5ebe5f6a78cedb2432e33d2e739ff04d59278017298564391272fb"`
 
 ![alt rpc](docs/rpc.png)
