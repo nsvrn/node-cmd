@@ -27,11 +27,6 @@ def get_rpc(method, params=None, wallet=None):
         raise Exception('RPC connection failure, run nodecmd settings to edit')
     
 
-def get_mempool(verbose=False, sequence=False):
-    params = [verbose, sequence]
-    result = get_rpc('getrawmempool', params)
-    return result
-
 def get_info():
     info = {}
     cfg = util.get_conf('info')
