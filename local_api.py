@@ -1,4 +1,5 @@
-import rpc, json
+from rpc import get_rpc
+import json
 from external import get_price
 from flask import Flask
 
@@ -17,7 +18,15 @@ def to_json(dict):
     return response
 
 def get_info():
-    info = rpc.get_info()
+    bc = get_rpc('getblockchaininfo')
+    info = {}
+    info['blocks'] = int(bc['blocks'])
+    info['node_size'] = int(bc['size_on_disk'])
+    nh = get_rpc('getnetworkhashps', [100])
+    info['hashrate'] = int(nh)
+    info['difficulty'] = int(bc['difficulty'])
+    fe = get_rpc('estimatesmartfee', [6])
+    info['fee'] = int(fe['feerate'] * 100e6 / 1000)
     info['price'] = get_price()
     return info
 
